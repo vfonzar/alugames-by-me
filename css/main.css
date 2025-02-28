@@ -183,13 +183,17 @@
 .modal__close {
     position: absolute;
     top: 10px;
-    right: 15px;
+    right: 12px; 
     font-size: 1.8rem;
     cursor: pointer;
     color: white;
     background: none;
     border: none;
     font-weight: bold;
+}
+
+.modal__close:hover {
+    transform: scale(1.1);
 }
 
 /* 🔹 Botão "Ver Trailer" */
@@ -231,13 +235,17 @@
 #trailer-close {
     position: absolute;
     top: 10px;
-    right: 15px;
+    right: 12px;
     font-size: 1.8rem;
     cursor: pointer;
     color: white;
     background: none;
     border: none;
     font-weight: bold;
+}
+
+#trailer-close:hover {
+    transform: scale(1.1); /* 🔥 Pequena animação ao passar o mouse */
 }
 
 /* 🔥 Fogos de Artifício */
@@ -275,7 +283,7 @@
     border: 5px solid rgba(255, 255, 255, 0.3);
     border-top: 5px solid #00F4BF;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    animation: spin 0.8s linear infinite; /* 🔥 Agora é mais rápido */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -288,8 +296,14 @@
 }
 
 .modal__button:disabled {
-    background: #666;  /* Cinza para indicar desativado */
+    background: #667;  /* Cinza para indicar desativado */
     color: #ccc;  /* Texto mais apagado */
     cursor: not-allowed;  /* 🔥 Indica que o botão não pode ser clicado */
     opacity: 0.6;
+    filter: grayscale(100%); /* 🔥 Adiciona um efeito de "desativado" */
+}
+
+/* 🔥 Oculta o modal de sucesso quando o trailer estiver aberto */
+.modal__trailer.show ~ #modal {
+    display: none;
 }

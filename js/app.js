@@ -110,14 +110,30 @@ document.addEventListener("DOMContentLoaded", function () {
             animarFogos();
         }
     
-        // 🔥 Obtém o nome do jogo do texto da mensagem
+        // 🔥 Obtém o nome do jogo
         const gameName = mensagem.split(" ")[0];
     
-        // 🎬 Desativa o botão para Takenoko e Ticket to Ride
-        if (gameName === "Takenoko" || gameName === "Ticket") {
-            modalPlayButton.setAttribute("disabled", "true");  // Desativa
+        // ❌ Se o jogo foi devolvido, escondemos o botão "Ver Trailer"
+        if (mensagem.includes("devolvido")) {
+            modalPlayButton.style.display = "none"; // 🔹 Oculta o botão
+            modalPlayButton.setAttribute("disabled", "true"); 
+            modalPlayButton.style.cursor = "not-allowed";
+            modalPlayButton.style.opacity = "0.5";
+            modalPlayButton.style.pointerEvents = "none";
         } else {
-            modalPlayButton.removeAttribute("disabled");  // Mantém ativo para Monopoly
+            modalPlayButton.style.display = "block";
+            modalPlayButton.removeAttribute("disabled");
+            modalPlayButton.style.cursor = "pointer";
+            modalPlayButton.style.opacity = "1";
+            modalPlayButton.style.pointerEvents = "auto";
+
+            // 🕹️ Se for Takenoko ou Ticket to Ride, desativa o botão
+            if (gameName === "Takenoko" || gameName === "Ticket") {
+                modalPlayButton.setAttribute("disabled", "true");
+                modalPlayButton.style.cursor = "not-allowed";
+                modalPlayButton.style.opacity = "0.5";
+                modalPlayButton.style.pointerEvents = "none";
+            }
         }
     
         setTimeout(() => {
@@ -135,20 +151,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function abrirTrailer() {
         trailerFrame.style.display = "none";
-    
+
         // Criando o spinner
         const spinner = document.createElement("div");
         spinner.classList.add("spinner");
-    
+
         // Adicionando o spinner ao modal
         trailerModal.querySelector(".modal__trailer").appendChild(spinner);
-    
+
         // 🔥 Fecha o modal principal ANTES de carregar o trailer
         modal.classList.remove("show");
-    
+
         // Exibe o modal do trailer
         trailerModal.classList.add("show");
-    
+
         // Definindo URL do Trailer (Apenas Monopoly Disponível)
         setTimeout(() => {
             trailerFrame.src = "https://www.youtube.com/embed/QgbEPQfLzw8";
