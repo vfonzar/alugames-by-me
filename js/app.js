@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const botoes = document.querySelectorAll(".dashboard__item__button");
     const modal = document.getElementById("modal");
     const modalMessage = document.getElementById("modal-message");
-    const modalClose = document.getElementById("modal-close");
+    const modalPlayButton = document.getElementById("modal-play");
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
 
@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
             this.y = y;
             this.color = color;
             this.particles = [];
-            this.exploded = false;
             for (let i = 0; i < 50; i++) {
                 this.particles.push({
                     x: this.x,
@@ -89,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.textContent = "Devolver";
                 this.classList.add("dashboard__item__button--return");
 
-                exibirModal(`${nomeJogo} alugado com sucesso!`, true); // true ativa os fogos
+                exibirModal(`${nomeJogo} alugado com sucesso!`, true);
             } else {
                 imagem.classList.remove("dashboard__item__img--rented");
                 this.textContent = "Alugar";
@@ -115,7 +114,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3000);
     }
 
-    modalClose.addEventListener("click", function () {
-        modal.classList.remove("show");
+    modalPlayButton.addEventListener("click", function () {
+        modalPlayButton.textContent = "Carregando...";
+        modalPlayButton.style.backgroundColor = "#00F4BF";
+        
+        setTimeout(() => {
+            window.open("https://www.pogo.com/games/monopoly", "_blank");
+            modalPlayButton.textContent = "Jogar";
+            modalPlayButton.style.backgroundColor = "#1875E8";
+        }, 1500);
     });
 });

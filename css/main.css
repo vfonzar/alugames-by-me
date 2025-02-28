@@ -213,3 +213,19 @@
     pointer-events: none;
     z-index: 1;
 }
+
+.modal__button {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    background: #1875E8;
+    color: white;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.modal__button:hover {
+    background: #505EFF;
+}
