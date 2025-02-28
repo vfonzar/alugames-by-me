@@ -3,10 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modal");
     const modalMessage = document.getElementById("modal-message");
     const modalPlayButton = document.getElementById("modal-play");
+    const modalClose = document.getElementById("modal-close");
+    const trailerModal = document.getElementById("trailer-modal");
+    const trailerFrame = document.getElementById("trailer-frame");
+    const trailerClose = document.getElementById("trailer-close");
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
 
-    // Ajusta o tamanho do canvas para a tela
     function ajustarCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -14,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ajustarCanvas();
     window.addEventListener("resize", ajustarCanvas);
 
-    // Criação dos fogos de artifício
     class Firework {
         constructor(x, y, color) {
             this.x = x;
@@ -55,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let fireworks = [];
 
     function criarFogos() {
-        for (let i = 0; i < 3; i++) { // Altere esse número para mais ou menos fogos
+        for (let i = 0; i < 3; i++) {
             fireworks.push(new Firework(
                 Math.random() * canvas.width, 
                 Math.random() * canvas.height / 2, 
@@ -87,14 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 imagem.classList.add("dashboard__item__img--rented");
                 this.textContent = "Devolver";
                 this.classList.add("dashboard__item__button--return");
-
-                exibirModal(`${nomeJogo} alugado com sucesso!`, true);
+                exibirModal(`${nomeJogo} alugado com sucesso!`, true, nomeJogo);
             } else {
                 imagem.classList.remove("dashboard__item__img--rented");
                 this.textContent = "Alugar";
                 this.classList.remove("dashboard__item__button--return");
-
-                exibirModal(`Você devolveu o jogo ${nomeJogo}`, false);
+                exibirModal(`${nomeJogo} devolvido!`, false, nomeJogo);
             }
         });
     });
@@ -102,26 +102,63 @@ document.addEventListener("DOMContentLoaded", function () {
     function exibirModal(mensagem, ativarFogos) {
         modalMessage.textContent = mensagem;
         modal.classList.add("show");
-
+        modalMessage.style.marginBottom = "20px";
+    
         if (ativarFogos) {
             fireworks = [];
             criarFogos();
             animarFogos();
         }
-
+    
+        // 🔥 Obtém o nome do jogo do texto da mensagem
+        const gameName = mensagem.split(" ")[0];
+    
+        // 🎬 Desativa o botão para Takenoko e Ticket to Ride
+        if (gameName === "Takenoko" || gameName === "Ticket") {
+            modalPlayButton.setAttribute("disabled", "true");  // Desativa
+        } else {
+            modalPlayButton.removeAttribute("disabled");  // Mantém ativo para Monopoly
+        }
+    
         setTimeout(() => {
             modal.classList.remove("show");
-        }, 3000);
+        }, 12000);
     }
 
+    modalClose.addEventListener("click", () => {
+        modal.classList.remove("show");
+    });
+
     modalPlayButton.addEventListener("click", function () {
-        modalPlayButton.textContent = "Carregando...";
-        modalPlayButton.style.backgroundColor = "#00F4BF";
-        
+        abrirTrailer();
+    });
+
+    function abrirTrailer() {
+        trailerFrame.style.display = "none";
+    
+        // Criando o spinner
+        const spinner = document.createElement("div");
+        spinner.classList.add("spinner");
+    
+        // Adicionando o spinner ao modal
+        trailerModal.querySelector(".modal__trailer").appendChild(spinner);
+    
+        // 🔥 Fecha o modal principal ANTES de carregar o trailer
+        modal.classList.remove("show");
+    
+        // Exibe o modal do trailer
+        trailerModal.classList.add("show");
+    
+        // Definindo URL do Trailer (Apenas Monopoly Disponível)
         setTimeout(() => {
-            window.open("https://www.pogo.com/games/monopoly", "_blank");
-            modalPlayButton.textContent = "Jogar";
-            modalPlayButton.style.backgroundColor = "#1875E8";
+            trailerFrame.src = "https://www.youtube.com/embed/QgbEPQfLzw8";
+            trailerFrame.style.display = "block";
+            spinner.remove(); // 🔥 Remove o spinner após carregar
         }, 1500);
+    }
+
+    trailerClose.addEventListener("click", () => {
+        trailerModal.classList.remove("show");
+        trailerFrame.src = "";
     });
 });
