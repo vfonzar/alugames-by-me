@@ -12,7 +12,7 @@ O **AluGames** é um sistema de aluguel de boardgames, desenvolvido para pratica
 - Interface moderna com **design futurista e animações suaves**
 
 🔗 **Acesse o projeto online:**  
-👉 [vfonzar.github.io/alugames/](https://vfonzar.github.io/alugames-by-me/)
+👉 [vfonzar.github.io/alugames-by-me/](https://vfonzar.github.io/alugames-by-me/)
 
 ---
 
