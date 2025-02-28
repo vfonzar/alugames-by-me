@@ -114,16 +114,32 @@
 .dashboard__item__button {
     display: flex;
     justify-content: center;
+    align-items: center; /* Garante que o texto fique centralizado */
 
     font-weight: 700;
     font-size: 1.5rem;
-
+    color: white; /* Garante que o texto fique branco */
+    text-decoration: none; /* Remove qualquer sublinhado */
+    
     padding: 1rem 1.5rem;
     min-width: 13rem;
 
     border-radius: 1rem;
-
+    border: none; /* Remove qualquer borda aplicada */
     background-color: #1875E8;
+    cursor: pointer; /* Mantém a aparência de botão */
+
+    transition: background 0.3s ease;
+}
+
+.dashboard__item__button:hover {
+    background-color: #505EFF; /* Mantém um efeito hover consistente */
+}
+
+.dashboard__item__button:visited,
+.dashboard__item__button:active {
+    color: white; /* Mantém a cor correta ao clicar */
+    text-decoration: none;
 }
 
 .dashboard__item__button--return {
