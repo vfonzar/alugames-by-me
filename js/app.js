@@ -89,17 +89,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 imagem.classList.add("dashboard__item__img--rented");
                 this.textContent = "Devolver";
                 this.classList.add("dashboard__item__button--return");
-                exibirModal(`${nomeJogo} alugado com sucesso!`, true, nomeJogo);
+                exibirModal(`Aproveite o melhor de ${nomeJogo}!`, true, nomeJogo);
             } else {
                 imagem.classList.remove("dashboard__item__img--rented");
                 this.textContent = "Alugar";
                 this.classList.remove("dashboard__item__button--return");
-                exibirModal(`${nomeJogo} devolvido!`, false, nomeJogo);
+                exibirModal(`Obrigado por jogar ${nomeJogo}!`, false, nomeJogo);
             }
         });
     });
 
-    function exibirModal(mensagem, ativarFogos) {
+    let modalTimeout;
+
+    function exibirModal(mensagem, ativarFogos, nomeJogo) {
         modalMessage.textContent = mensagem;
         modal.classList.add("show");
         modalMessage.style.marginBottom = "20px";
@@ -110,13 +112,14 @@ document.addEventListener("DOMContentLoaded", function () {
             animarFogos();
         }
     
-        // 🔥 Obtém o nome do jogo
-        const gameName = mensagem.split(" ")[0];
+        clearTimeout(modalTimeout);
     
-        // ❌ Se o jogo foi devolvido, escondemos o botão "Ver Trailer"
-        if (mensagem.includes("devolvido")) {
-            modalPlayButton.style.display = "none"; // 🔹 Oculta o botão
-            modalPlayButton.setAttribute("disabled", "true"); 
+        // 🔥 Normalizando o nome do jogo para evitar erros de comparação
+        nomeJogo = nomeJogo.trim().toLowerCase();
+    
+        if (!ativarFogos) {
+            modalPlayButton.style.display = "none";
+            modalPlayButton.setAttribute("disabled", "true");
             modalPlayButton.style.cursor = "not-allowed";
             modalPlayButton.style.opacity = "0.5";
             modalPlayButton.style.pointerEvents = "none";
@@ -126,17 +129,30 @@ document.addEventListener("DOMContentLoaded", function () {
             modalPlayButton.style.cursor = "pointer";
             modalPlayButton.style.opacity = "1";
             modalPlayButton.style.pointerEvents = "auto";
-
-            // 🕹️ Se for Takenoko ou Ticket to Ride, desativa o botão
-            if (gameName === "Takenoko" || gameName === "Ticket") {
+    
+            // 🔥 Se for Takenoko ou Ticket to Ride, desativa o botão
+            if (nomeJogo.includes("takenoko") || nomeJogo.includes("ticket to ride")) {
                 modalPlayButton.setAttribute("disabled", "true");
                 modalPlayButton.style.cursor = "not-allowed";
                 modalPlayButton.style.opacity = "0.5";
-                modalPlayButton.style.pointerEvents = "none";
+                modalPlayButton.style.pointerEvents = "all"; // 🔥 Permite capturar clique
+    
+                // 🚫 Adiciona um evento de clique que impede a ação e reforça o feedback visual
+                modalPlayButton.onclick = function (event) {
+                    event.preventDefault();
+                    modalPlayButton.style.cursor = "not-allowed";
+                };
+            } else {
+                // 🔄 Se for Monopoly, reativa normalmente
+                modalPlayButton.removeAttribute("disabled");
+                modalPlayButton.style.cursor = "pointer";
+                modalPlayButton.style.opacity = "1";
+                modalPlayButton.style.pointerEvents = "auto";
+                modalPlayButton.onclick = null; // 🔥 Remove qualquer evento antigo
             }
         }
     
-        setTimeout(() => {
+        modalTimeout = setTimeout(() => {
             modal.classList.remove("show");
         }, 12000);
     }

@@ -295,12 +295,17 @@
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-.modal__button:disabled {
+.modal__button[disabled] {
     background: #667;  /* Cinza para indicar desativado */
     color: #ccc;  /* Texto mais apagado */
-    cursor: not-allowed;  /* 🔥 Indica que o botão não pode ser clicado */
+    cursor: not-allowed !important;  /* 🔥 Força o feedback de "não clicável" */
     opacity: 0.6;
-    filter: grayscale(100%); /* 🔥 Adiciona um efeito de "desativado" */
+    filter: grayscale(100%); /* 🔥 Dá um efeito visual de botão desativado */
+    pointer-events: all; /* 🔥 Garante que o evento de clique seja capturado */
+}
+
+.modal__button:disabled:hover {
+    cursor: not-allowed !important; /* 🔥 Mantém o cursor mesmo no hover */
 }
 
 /* 🔥 Oculta o modal de sucesso quando o trailer estiver aberto */
