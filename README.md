@@ -51,16 +51,9 @@ git clone https://github.com/vfonzar/alugames-by-me.git
 cd alugames-by-me
 ```
 
-2.	Abra o arquivo index.html no navegador.
+---
 
-🛠️ Funcionalidades
-
-✔️ Gera um número aleatório secreto a cada partida
-✔️ Informa ao jogador se o número digitado é maior ou menor que o correto
-✔️ Interface simples e intuitiva
-✔️ Fácil de rodar localmente, sem necessidade de instalações adicionais
-
-🤝 Contribuindo
+## 🤝 Contribuindo
 
 Se quiser contribuir com melhorias ou novas funcionalidades, siga os passos:
 1.	Faça um fork deste repositório
